@@ -1,0 +1,17 @@
+# 数据和日志
+logs/
+save_data/
+
+# ROS 编译产物
+**/build/
+**/devel/
+
+# Python 缓存
+*.pyc
+__pycache__/
+
+# 临时文件
+*.log
+*.swp
+*~
+

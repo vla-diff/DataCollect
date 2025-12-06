@@ -1,0 +1,17 @@
+as
+
+
+sec
+
+qwe
+
+
+qqqqfasdfasdfdsafdsaffasdfdigraph G {
+"camera_color_frame" -> "Tag0"[label="Broadcaster: /apriltag_ros_continuous_node\nAverage rate: 8.807 Hz\nMost recent transform: 87.732 ( 1753346041.018 sec old)\nBuffer length: 4.883 sec\n"];
+"drone_body" -> "camera_color_frame"[label="Broadcaster: /drone_tf_publisher\nAverage rate: 100.837 Hz\nMost recent transform: 1753346128.735 ( 0.015 sec old)\nBuffer length: 4.949 sec\n"];
+"world" -> "drone_body"[label="Broadcaster: /drone_tf_publisher\nAverage rate: 100.835 Hz\nMost recent transform: 1753346128.735 ( 0.015 sec old)\nBuffer length: 4.949 sec\n"];
+edge [style=invis];
+ subgraph cluster_legend { style=bold; color=black; label ="view_frames Result";
+"Recorded at time: 1753346128.750"[ shape=plaintext ] ;
+ }->"world";
+}
