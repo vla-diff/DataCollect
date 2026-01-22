@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # 每个任务的文件数量倍数参数
-FILES_PER_TASK=30
+FILES_PER_TASK=1
 
 # 设置工作目录（根据实际情况修改）
 WORKSPACE_DIR="$HOME/Desktop/DataCollect"
@@ -24,6 +24,7 @@ echo "开始时间: $(date)" | tee -a "$LOG_FILE"
 # 主循环 - 从all_task.txt中读取任务并执行
 ALL_TASK_FILE="$WORKSPACE_DIR/all_task.txt"
 TASK_FILE="$WORKSPACE_DIR/task.txt"
+DELETE_INDEX_FILE="$WORKSPACE_DIR/delete_index.txt"
 
 # 检查all_task.txt文件是否存在
 if [ ! -f "$ALL_TASK_FILE" ]; then
@@ -84,6 +85,21 @@ while [ $current_group -lt $TASK_GROUPS ] && [ $CURRENT_LINE -le $TOTAL_LINES ];
     if [[ "$LINE_CONTENT" =~ ^[0-9]+$ ]]; then
         current_group=$((current_group + 1))
         DATA_LINES="$LINE_CONTENT"
+
+        DELETE_INDEX=0
+        if [ -f "$DELETE_INDEX_FILE" ]; then
+            DELETE_INDEX=$(sed -n "${current_group}p" "$DELETE_INDEX_FILE")
+            if [ -z "$DELETE_INDEX" ]; then
+                DELETE_INDEX=0
+            fi
+            if ! [[ "$DELETE_INDEX" =~ ^[0-9]+$ ]]; then
+                echo "警告: $DELETE_INDEX_FILE 第 $current_group 行不是有效数字，忽略" | tee -a "$LOG_FILE"
+                DELETE_INDEX=0
+            fi
+        else
+            echo "警告: $DELETE_INDEX_FILE 文件不存在，将不触发隐藏逻辑" | tee -a "$LOG_FILE"
+        fi
+        echo "任务组 $current_group 隐藏触发轮次: $DELETE_INDEX" | tee -a "$LOG_FILE"
         
         echo -e "\n[$(date)] 处理第 $current_group/$TASK_GROUPS 个任务组" | tee -a "$LOG_FILE"
         echo "当前任务组包含 $DATA_LINES 行数据" | tee -a "$LOG_FILE"
@@ -158,7 +174,7 @@ while [ $current_group -lt $TASK_GROUPS ] && [ $CURRENT_LINE -le $TOTAL_LINES ];
             else
                 echo "警告: devel/setup.bash 不存在，跳过环境设置" | tee -a "$LOG_FILE"
             fi
-            ./new_all.sh "Delete${current_group}"
+            ./new_all.sh "Delete${current_group}" "$DELETE_INDEX"
         ) | tee -a "$LOG_FILE" 2>&1
         
         # 记录结束状态

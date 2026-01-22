@@ -1,6 +1,15 @@
 #!/bin/bash
 
 MODEL_STATE=1 #用于记录需要抓取的物体现在的状态，0是隐藏，1是显示
+HIDE_AFTER_CYCLE=0
+if [ -n "$2" ]; then
+    HIDE_AFTER_CYCLE="$2"
+fi
+if ! [[ "$HIDE_AFTER_CYCLE" =~ ^[0-9]+$ ]]; then
+    echo "警告: 隐藏触发轮次无效: $HIDE_AFTER_CYCLE，已忽略"
+    HIDE_AFTER_CYCLE=0
+fi
+echo "隐藏触发轮次: $HIDE_AFTER_CYCLE"
 
 # 配置参数
 max_timeout=25  # 超时时间（秒）
@@ -284,13 +293,13 @@ for cycle in $(seq 1 $((TASK_COUNT-1))); do
   if [ -f $SAVE_PERCHING_DONE_FILE ] && [ -f $PUB_COMMAND_DONE_FILE ]; then
       echo "第 $cycle 轮 $SCRIPT_NAME 和 $PUB_TITLE 均已完成"
       
-    if [ "$MODEL_STATE" -eq 0 ]; then #用于隐藏/显示物体    $MODEL_STATE=0是现在是隐藏，要改成显示   $MODEL_STATE=1是现在是显示，要改成隐藏
-        bash ./HideThing.bash $1 show
-        MODEL_STATE=1
-    else
-        bash ./HideThing.bash $1 hide
-        MODEL_STATE=0
-    fi
+      if [ "$HIDE_AFTER_CYCLE" -gt 0 ] && [ "$cycle" -eq "$HIDE_AFTER_CYCLE" ]; then
+          if [ "$MODEL_STATE" -ne 0 ]; then
+              echo "第 $cycle 轮触发隐藏物体..."
+              bash ./HideThing.bash "$1" hide
+              MODEL_STATE=0
+          fi
+      fi
 
 
       # 清理PID文件
@@ -300,6 +309,13 @@ for cycle in $(seq 1 $((TASK_COUNT-1))); do
       sleep 2
   fi
 done
+
+# 确保任务完成后显示物体
+if [ "$MODEL_STATE" -eq 0 ]; then
+    echo "任务完成，显示物体..."
+    bash ./HideThing.bash "$1" show
+    MODEL_STATE=1
+fi
 
 # 检查是否是正常完成还是异常退出
 if [ $cycle -lt $((TASK_COUNT-1)) ]; then

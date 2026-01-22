@@ -8,7 +8,7 @@ df = pd.read_excel('3.xlsx')
 df = df.replace('\\', np.nan)
 
 # 转换数值列
-numeric_cols = ['waypoint', 'x', 'y', 'z', 'yaw', 'dx(theta1)', 'dz(theta2)', 'dy(r)', 'random_type']
+numeric_cols = ['waypoint', 'x', 'y', 'z', 'yaw', 'dx(theta1)', 'dz(theta2)', 'dy(r)', 'random_type', 'Delete']
 for col in numeric_cols:
     if col in df.columns:
         df[col] = pd.to_numeric(df[col], errors='coerce')
@@ -33,7 +33,7 @@ if current_trajectory:
 print(f"总共提取到 {len(trajectories)} 个轨迹")
 
 # 写入输出文件
-with open('all_task.txt', 'w') as f, open('prompts.txt', 'w') as pf:
+with open('all_task.txt', 'w') as f, open('prompts.txt', 'w') as pf, open('delete_index.txt', 'w') as df:
     for i, traj in enumerate(trajectories):
         instruction = traj[0]['Instruction']
         print(f"\n处理轨迹 {i+1}: {instruction}")
@@ -41,6 +41,14 @@ with open('all_task.txt', 'w') as f, open('prompts.txt', 'w') as pf:
         
         pf.write(f"轨迹 {i+1}: {instruction}\n")
         f.write(f"{len(traj)}\n")
+
+        delete_indices = [idx for idx, wp in enumerate(traj)
+                          if pd.notna(wp.get('Delete')) and int(wp.get('Delete')) == 1]
+        if len(delete_indices) > 1:
+            print(f"警告: 轨迹 {i+1} 有多个Delete标记，使用第一个: {delete_indices[0]}")
+        delete_idx = delete_indices[0] if delete_indices else None
+        delete_cycle = delete_idx if delete_idx is not None and delete_idx > 0 else 0
+        df.write(f"{delete_cycle}\n")
         
         for wp in traj:
             wp_type = int(wp['waypoint'])

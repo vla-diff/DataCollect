@@ -23,6 +23,8 @@ cd /path/to/xxx
 catkin_make
 ```
 3. 运行流程。
+将Unity里面导入的场景的文件夹的路径赋值给`./HideThing.bash`的`PROJECT_PATH`
+
 
 人工标注的数据放于`3.xlsx`内，然后运行
 ```bash

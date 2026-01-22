@@ -1,7 +1,7 @@
 #!/bin/bash
 
-PROJECT_PATH="/home/bozhi/Downloads/simEnv_2025_8_7/unity/UnityVisExample/UAV_sample"
-TARGET_FILE="$PROJECT_PATH/Assets/hide_target.txt"
+PROJECT_PATH="/home/bozhi/Desktop/UAV_sample_out_test"
+TARGET_FILE="$PROJECT_PATH/hide_target.txt"
 
 if [ $# -lt 2 ]; then
     echo "用法: $0 物体名 命令(hide/show)"
