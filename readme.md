@@ -1,6 +1,12 @@
 1. 安装必要的依赖
+
+
 安装ros noetic（可使用鱼香ros的一键安装）
+
+
 系统版本为ubuntu20.04
+
+
 ```bash
 conda deactivate
 
