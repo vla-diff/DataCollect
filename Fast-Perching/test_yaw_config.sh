@@ -3,6 +3,8 @@
 # Fast-Perching Yaw 测试脚本
 # 该脚本用于测试不同的yaw配置
 
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
 echo "=== Fast-Perching Yaw配置测试脚本 ==="
 echo ""
 
@@ -10,7 +12,7 @@ echo ""
 modify_launch_param() {
     local param_name=$1
     local param_value=$2
-    local launch_file="/home/bozhi/Desktop/DataCollect/UnityVisExample/Fast-Perching/src/planning/launch/perching_unity.launch"
+    local launch_file="$SCRIPT_DIR/src/planning/launch/perching_unity.launch"
     
     # 使用sed替换参数值
     sed -i "s/<param name=\"${param_name}\" value=\"[^\"]*\" \/>/<param name=\"${param_name}\" value=\"${param_value}\" \/>/" "$launch_file"
@@ -74,4 +76,4 @@ echo "现在您可以启动系统："
 echo "  roslaunch planning perching_unity.launch"
 echo ""
 echo "或者查看配置文件："
-echo "  cat /home/bozhi/Desktop/DataCollect/UnityVisExample/Fast-Perching/YAW_CONFIGURATION.md"
+echo "  cat \"$SCRIPT_DIR/YAW_CONFIGURATION.md\""

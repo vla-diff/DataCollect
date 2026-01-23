@@ -1,5 +1,6 @@
 #!/bin/bash
-cd /home/bozhi/Desktop/DataCollect/Fast-Perching
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+cd "$SCRIPT_DIR/Fast-Perching"
 source devel/setup.bash
 
 # 函数：将四元数转换为欧拉角

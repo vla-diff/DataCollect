@@ -23,7 +23,9 @@ else
     echo "提示：你也可以使用 '$0 数字' 来指定每组文件夹数量"
 fi
 
-TARGET_BASE_DIR="/home/bozhi/Desktop/DataCollect/all_data2"
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+WORKSPACE_DIR="$SCRIPT_DIR"
+TARGET_BASE_DIR="$WORKSPACE_DIR/all_data2"
 
 
 # 查找现有记录的最大编号
@@ -44,7 +46,7 @@ NEW_NUM=$((LAST_NUM + 1))
 TARGET_BASE_DIR="$TARGET_BASE_DIR/$NEW_NUM"
 mkdir -p "$TARGET_BASE_DIR"
 
-SOURCE_DIR="/home/bozhi/Desktop/DataCollect/save_data"
+SOURCE_DIR="$WORKSPACE_DIR/save_data"
 
 # 获取所有数字文件夹并排序
 folders=($(ls -1 "$SOURCE_DIR" | grep '^[0-9]\+$' | sort -n))

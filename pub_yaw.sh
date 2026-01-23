@@ -7,8 +7,10 @@
 # 例如：./pub_yaw.sh -1.57 # 设置目标yaw为-1.57弧度（-90度）
 
 # Source ROS workspace
-cd /home/bozhi/Desktop/DataCollect/EGO-Planner-v3
-source /home/bozhi/Desktop/DataCollect/EGO-Planner-v3/devel/setup.bash
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+WORKSPACE_DIR="$SCRIPT_DIR"
+cd "$WORKSPACE_DIR/EGO-Planner-v3"
+source "$WORKSPACE_DIR/EGO-Planner-v3/devel/setup.bash"
 
 # 函数：将四元数转换为欧拉角
 quat_to_euler() {

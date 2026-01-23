@@ -1,5 +1,7 @@
 #!/bin/bash
 
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
 MODEL_STATE=1 #用于记录需要抓取的物体现在的状态，0是隐藏，1是显示
 HIDE_AFTER_CYCLE=0
 if [ -n "$2" ]; then
@@ -285,7 +287,7 @@ for cycle in $(seq 1 $((TASK_COUNT-1))); do
   # 如果任务卡住，跳出for循环
   if [ "$task_stuck" = true ]; then
       echo "由于第 $cycle 轮任务卡住，强制退出for循环"
-      bash /home/bozhi/Desktop/DataCollect/HideThing.bash $1 show
+      bash "$SCRIPT_DIR/HideThing.bash" $1 show
       break
   fi
   

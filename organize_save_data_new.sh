@@ -24,7 +24,9 @@ else
     echo "提示：你也可以使用 '$0 数字' 来指定每组文件夹数量"
 fi
 
-TARGET_BASE_DIR="/home/bozhi/Desktop/DataCollect/all_data1"
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+WORKSPACE_DIR="$SCRIPT_DIR"
+TARGET_BASE_DIR="$WORKSPACE_DIR/all_data1"
 
 # 查找现有记录的最大编号
 LAST_NUM=0
@@ -44,7 +46,7 @@ NEW_NUM=$((LAST_NUM + 1))
 TARGET_BASE_DIR="$TARGET_BASE_DIR/$NEW_NUM"
 mkdir -p "$TARGET_BASE_DIR"
 
-SOURCE_DIR="/home/bozhi/Desktop/DataCollect/save_data"
+SOURCE_DIR="$WORKSPACE_DIR/save_data"
 
 # 获取所有数字文件夹并排序
 folders=($(ls -1 "$SOURCE_DIR" | grep '^[0-9]\+$' | sort -n))
@@ -73,7 +75,7 @@ for ((group=1; group<=groups; group++)); do
     echo "" >> "$PROMPT_FILE"
     
     # 尝试从all_task.txt获取对应的轨迹指令信息
-    if [ -f "/home/bozhi/Desktop/DataCollect/all_task.txt" ]; then
+    if [ -f "$WORKSPACE_DIR/all_task.txt" ]; then
         echo "轨迹 $group 的指令信息:" >> "$PROMPT_FILE"
         # 这里可以根据需要添加具体的轨迹信息提取逻辑
         echo "处理轨迹 $group (来自 all_task.txt)" >> "$PROMPT_FILE"

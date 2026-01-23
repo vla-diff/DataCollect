@@ -10,7 +10,9 @@
 RECORD_DURATION=${1:-10}  # 默认记录10秒
 
 # 创建主保存目录
-SAVE_DIR="/home/bozhi/Desktop/DataCollect/save_data"
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+WORKSPACE_DIR="$SCRIPT_DIR"
+SAVE_DIR="$WORKSPACE_DIR/save_data"
 mkdir -p "$SAVE_DIR"
 
 # 查找现有记录的最大编号
@@ -54,8 +56,8 @@ echo "=========================================="
 # 运行记录脚本
 echo "启动位置和图像记录器..."
 echo "等待接收目标点触发信号..."
-cd /home/bozhi/Desktop/DataCollect/EGO-Planner-v3
-source /home/bozhi/Desktop/DataCollect/EGO-Planner-v3/devel/setup.bash
+cd "$WORKSPACE_DIR/EGO-Planner-v3"
+source "$WORKSPACE_DIR/EGO-Planner-v3/devel/setup.bash"
 python3 record_cmd_image.py $RECORD_DURATION "$OUTPUT_DIR" "$IMAGE_DIR" "$DATA_FILE"
 
 

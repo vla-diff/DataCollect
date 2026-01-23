@@ -4,7 +4,8 @@
 FILES_PER_TASK=5
 
 # 设置工作目录（根据实际情况修改）
-WORKSPACE_DIR="$HOME/Desktop/DataCollect"
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+WORKSPACE_DIR="$SCRIPT_DIR"
 
 # 日志文件路径
 LOG_DIR="$WORKSPACE_DIR/logs"
@@ -199,7 +200,7 @@ while [ $current_group -lt $TASK_GROUPS ] && [ $CURRENT_LINE -le $TOTAL_LINES ];
     done
         
         echo "[$(date)] 任务组 $current_group 的执行已完成，共执行了 $((cycle-1)) 次" | tee -a "$LOG_FILE"
-        ./organize_save_data.sh $((DATA_LINES-1))
+        "$WORKSPACE_DIR/organize_save_data.sh" $((DATA_LINES-1))
         
         # 读取prompts.txt中对应任务组的指令并保存到all_data1的最新文件夹
         PROMPTS_FILE="$WORKSPACE_DIR/prompts.txt"
@@ -231,7 +232,7 @@ while [ $current_group -lt $TASK_GROUPS ] && [ $CURRENT_LINE -le $TOTAL_LINES ];
             echo "[$(date)] 警告: prompts.txt文件不存在" | tee -a "$LOG_FILE"
         fi
         
-        ./delete.sh
+        "$WORKSPACE_DIR/delete.sh"
         
         # 更新当前行号到下一个任务组
         CURRENT_LINE=$((CURRENT_LINE + DATA_LINES + 1))

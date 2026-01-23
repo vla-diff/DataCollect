@@ -1,5 +1,7 @@
 #!/bin/bash
 
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
 echo "=== Fast-Perching Yaw 命令行测试示例 ==="
 echo ""
 
@@ -31,4 +33,4 @@ echo "   rostopic echo /drone_0_planning/pos_cmd"
 echo ""
 
 echo "查看更详细的配置说明："
-echo "   cat /home/bozhi/Desktop/DataCollect/UnityVisExample/Fast-Perching/YAW_CONFIG_GUIDE.md"
+echo "   cat \"$SCRIPT_DIR/YAW_CONFIG_GUIDE.md\""
