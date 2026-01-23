@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # 每个任务的文件数量倍数参数
-FILES_PER_TASK=1
+FILES_PER_TASK=5
 
 # 设置工作目录（根据实际情况修改）
 WORKSPACE_DIR="$HOME/Desktop/DataCollect"

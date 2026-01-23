@@ -1,6 +1,6 @@
 #!/bin/bash
 
-PROJECT_PATH="/home/bozhi/Desktop/UAV_sample_out_test"
+PROJECT_PATH="/home/bozhi/Desktop/UAV_sample_xyx"
 TARGET_FILE="$PROJECT_PATH/hide_target.txt"
 
 if [ $# -lt 2 ]; then
@@ -10,6 +10,11 @@ fi
 
 OBJECT_NAME=$1
 COMMAND=$2
+
+mkdir -p "$PROJECT_PATH"
+if [ ! -f "$TARGET_FILE" ]; then
+    : > "$TARGET_FILE"
+fi
 
 echo "${OBJECT_NAME}:${COMMAND}" > "$TARGET_FILE"
 echo "已写入命令 '$COMMAND' 给物体 '$OBJECT_NAME'"

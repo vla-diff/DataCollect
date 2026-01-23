@@ -1,0 +1,13 @@
+轨迹 1: Pick up the cup on the table in front and put it on the bed on the left rear. Catch:cup. Put:bed
+轨迹 2: Pick up the cup on the table in front and put it on the bed on the left rear. Catch:cup. Put:bed
+轨迹 3: Pick up the cup on the table in front and put it on the bed on the left rear. Catch:cup. Put:bed
+轨迹 4: Pick up the cup on the table in front and put it on the bed on the left rear. Catch:cup. Put:bed
+轨迹 5: Put the candle on the table in front and put it on the table on the left. Catch:candle. Put:table
+轨迹 6: Put the candle on the table in front and put it on the table on the left. Catch:candle. Put:table
+轨迹 7: Put the candle on the table in front and put it on the table on the left. Catch:candle. Put:table
+轨迹 8: Pick up the photo frame behind and put it on the table on the left. Catch:photo frame. Put:table
+轨迹 9: Pick up the photo frame behind and put it on the table on the left. Catch:photo frame. Put:table
+轨迹 10: Pick up the photo frame behind and put it on the table on the left. Catch:photo frame. Put:table
+轨迹 11: Pick up the pen holder on the table on the right and put it on the chair behind. Catch:pen holder. Put:chair
+轨迹 12: Pick up the pen holder on the table on the right and put it on the chair behind. Catch:pen holder. Put:chair
+轨迹 13: Pick up the pen holder on the table on the right and put it on the chair behind. Catch:pen holder. Put:chair
