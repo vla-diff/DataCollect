@@ -1,4 +1,12 @@
 1. 安装必要的依赖
+
+
+安装ros noetic（可使用鱼香ros的一键安装）
+
+
+系统版本为ubuntu20.04
+
+
 ```bash
 conda deactivate
 
@@ -23,6 +31,8 @@ cd /path/to/xxx
 catkin_make
 ```
 3. 运行流程。
+
+
 将Unity里面导入的场景的文件夹的路径赋值给`./HideThing.bash`的`PROJECT_PATH`
 
 
