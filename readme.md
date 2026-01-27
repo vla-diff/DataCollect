@@ -46,10 +46,6 @@ python3 process.py
 ```
 ./new_25.sh
 ```
-和
-```
-./filter.bash
-```
 即可开始数据采集。
 
 4. 可视化采集流程

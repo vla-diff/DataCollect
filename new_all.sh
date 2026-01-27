@@ -19,6 +19,8 @@ max_timeout=25  # 超时时间（秒）
 # 主要终端PID文件
 TERM_PID_FILE1="/tmp/ego_term.pid"        # EGO规划器终端
 TERM_PID_FILE2="/tmp/tcp_term.pid"        # TCP终端
+TERM_PID_FILE3="/tmp/filter_term.pid"     # Filter终端
+TERM_PID_FILE4="/tmp/rviz_term.pid"       # RViz终端
 TERM_PID_FILE7="/tmp/perching_term.pid"   # Perching终端
 TERM_PID_FILE11="/tmp/change_yaw_term.pid" # Yaw终端
 
@@ -79,7 +81,7 @@ gnome-terminal --title="EGO-Planner" -- bash -c "
   echo '程序已结束，按回车关闭窗口...';
   read;
   " &
-sleep 20
+sleep 5
 
 # 启动 tcp.sh
 echo "启动 TCP..."
@@ -91,7 +93,31 @@ gnome-terminal --title="TCP" -- bash -c "
   echo '程序已结束，按回车关闭窗口...';
   read;
   " &
-sleep 20
+sleep 5
+
+# 启动 filter.bash
+echo "启动 Filter..."
+gnome-terminal --title="Filter" -- bash -c "
+  echo \$PPID > $TERM_PID_FILE3;
+  echo '正在启动 filter.bash...';
+  cd \"$SCRIPT_DIR\";
+  ./filter.bash;
+  echo '程序已结束，按回车关闭窗口...';
+  read;
+  " &
+sleep 1
+
+# 启动 rviz.bash
+echo "启动 RViz..."
+gnome-terminal --title="RViz" -- bash -c "
+  echo \$PPID > $TERM_PID_FILE4;
+  echo '正在启动 rviz.bash...';
+  cd \"$SCRIPT_DIR\";
+  ./rviz.bash;
+  echo '程序已结束，按回车关闭窗口...';
+  read;
+  " &
+sleep 1
 
 # 启动 pub_yaw.sh
 echo "启动 Yaw..."
@@ -102,24 +128,24 @@ gnome-terminal --title="Yaw" -- bash -c "
   echo '程序已结束，按回车关闭窗口...';
   read;
   " &
-sleep 20
+sleep 10
 
 # 启动 perching.sh
-echo "启动 Perching..."
-gnome-terminal --title="Perching" -- bash -c "
-  echo \$PPID > $TERM_PID_FILE7;
-  echo '正在运行 perching.sh...';
-  source devel/setup.bash;
-  ./perching.sh;
-  echo 'perching.sh 完成，按回车关闭窗口...';
-  read;
-  " &
-sleep 20
+# echo "启动 Perching..."
+# gnome-terminal --title="Perching" -- bash -c "
+#   echo \$PPID > $TERM_PID_FILE7;
+#   echo '正在运行 perching.sh...';
+#   source devel/setup.bash;
+#   ./perching.sh;
+#   echo 'perching.sh 完成，按回车关闭窗口...';
+#   read;
+#   " &
+# sleep 20
 
 echo "开始执行循环任务..."
 
 # 循环启动不同脚本 (从task.txt读取配置，从第三行开始)
-for cycle in $(seq 1 $((TASK_COUNT-1))); do
+for cycle in $(seq 1 $((TASK_COUNT - 1))); do
   # 解析当前循环的任务配置
   TASK_CONFIG=(${TASK_CONFIGS[$cycle]})
   TASK_TYPE=${TASK_CONFIG[0]}
@@ -332,6 +358,8 @@ sleep 1  # 确保完全完成
 echo "正在关闭所有程序和终端窗口..."
 [ -f $TERM_PID_FILE1 ] && kill -9 $(cat $TERM_PID_FILE1) 2>/dev/null
 [ -f $TERM_PID_FILE2 ] && kill -9 $(cat $TERM_PID_FILE2) 2>/dev/null
+[ -f $TERM_PID_FILE3 ] && kill -9 $(cat $TERM_PID_FILE3) 2>/dev/null
+[ -f $TERM_PID_FILE4 ] && kill -9 $(cat $TERM_PID_FILE4) 2>/dev/null
 [ -f $TERM_PID_FILE7 ] && kill -9 $(cat $TERM_PID_FILE7) 2>/dev/null
 [ -f $TERM_PID_FILE11 ] && kill -9 $(cat $TERM_PID_FILE11) 2>/dev/null
 
