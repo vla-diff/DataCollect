@@ -27,8 +27,7 @@ sudo apt install terminator
 ```
 2. 编译`EGO-Planner-v3`,`Fast-Perching`,`lidar_filter`和`ROS-Unity_bridge`
 ```
-cd /path/to/xxx
-catkin_make
+./rebuild_all.sh
 ```
 3. 运行流程。
 
